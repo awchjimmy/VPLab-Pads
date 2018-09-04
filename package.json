@@ -1,0 +1,25 @@
+{
+  "name": "vplab-pads",
+  "version": "1.0.0",
+  "description": "Light/Sound Control System used in VPLab",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/awchjimmy/VPLab-Pads.git"
+  },
+  "author": "awchjimmy",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/awchjimmy/VPLab-Pads/issues"
+  },
+  "homepage": "https://github.com/awchjimmy/VPLab-Pads#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "lodash": "^4.17.10",
+    "pug": "^2.0.3"
+  }
+}
