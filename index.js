@@ -11,9 +11,10 @@ app.use(express.static('public'))
 
 // config
 const port = 3003
-const udpHost = '192.168.43.198'
+// const udpHost = '192.168.43.198'
+const udpHost = '192.168.0.3'
 const udpPort = '7777'
-const udpClient = dgram.createSocket('udp4') 
+const udpClient = dgram.createSocket('udp4')
 
 app.get('/', (req, res) => {
   res.render('index', {})
@@ -65,12 +66,15 @@ let hslPixels2rgbPixels = (hslPixels) => {
 
 let rgbPixels2SerializedArray = (rgbPixels) => {
   let buff = _.reduce(rgbPixels, (buff, rgbPixel) => {
-    buff[rgbPixel.id * 4] = rgbPixel.id
-    buff[rgbPixel.id * 4 + 1] = rgbPixel.r
-    buff[rgbPixel.id * 4 + 2] = rgbPixel.g
-    buff[rgbPixel.id * 4 + 3] = rgbPixel.b
+    let i = rgbPixel.id * 2
+    let j = i + 1
+    buff[i * 4] = i
+    buff[j * 4] = j
+    buff[i * 4 + 1] = buff[j * 4 + 1] = rgbPixel.r
+    buff[i * 4 + 2] = buff[j * 4 + 2] = rgbPixel.g
+    buff[i * 4 + 3] = buff[j * 4 + 3] = rgbPixel.b
     return buff
-  }, new Uint8Array(rgbPixels.length * 4))
+  }, new Uint8Array(rgbPixels.length * 8))
   // console.log(buff)
 
   return buff

@@ -1,6 +1,6 @@
 const TOTAL_LEDS = 104
 const FPS = 60
-const LIGHTNESS_MIN = 15
+const LIGHTNESS_MIN = 0
 
 // socket.io
 let socket = io()
@@ -28,7 +28,7 @@ let tweenDrumKick = () => {
 
   ids.forEach(id => {
     pixels[id].l = 50
-    createjs.Tween.get(pixels[id]).to({ l: 25 }, 700)
+    createjs.Tween.get(pixels[id]).to({ l: LIGHTNESS_MIN }, 700)
   })
 }
 tweenDrumKick()
@@ -55,7 +55,7 @@ let tweenIdle = () => {
     createjs.Tween.get(pixels[id], { loop: true }).to({ l: LIGHTNESS_MIN }, _.random(1000, 3000))
   })
 }
-tweenIdle()
+// tweenIdle()
 
 // keyboard event
 window.addEventListener('keydown', (e) => {
