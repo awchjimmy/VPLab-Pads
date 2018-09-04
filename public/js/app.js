@@ -2,6 +2,10 @@ const TOTAL_LEDS = 104
 const FPS = 60
 const LIGHTNESS_MIN = 15
 
+// socket.io
+let socket = io()
+
+// data definition
 class Pixel {
   constructor(id) {
     this.id = id
@@ -58,6 +62,7 @@ window.addEventListener('keydown', (e) => {
   // alert(e.keyCode)
   switch (e.keyCode) {
     case 65: // A
+      socket.emit('userInterface', '[Bass Drum] (A)')
       tweenDrumKick()
       break
     default:
@@ -74,6 +79,7 @@ let display = () => {
       .style("background-color", ({ h, s, l }) => {
         return `hsl(${h}, ${s}%, ${l}%)`
       })
+    socket.emit('hslPixelsToBackend', pixels)
   }, 1000 / FPS)
 }
 display()
