@@ -24,7 +24,8 @@ _.range(TOTAL_LEDS).forEach(id => {
 
 // animation part
 let tweenDrumKick = () => {
-  let ids = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 25, 26, 38, 39, 51, 52, 64, 65, 77, 78, 90, 91, 92, 93, 94, 95, 96, 97, 97, 98, 99, 100, 101, 102, 103]
+  // let ids = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 25, 26, 38, 39, 51, 52, 64, 65, 77, 78, 90, 91, 92, 93, 94, 95, 96, 97, 97, 98, 99, 100, 101, 102, 103]
+  let ids = _.range(104)
 
   ids.forEach(id => {
     pixels[id].l = 50
@@ -32,6 +33,17 @@ let tweenDrumKick = () => {
   })
 }
 tweenDrumKick()
+
+let tweenDrumSnr = () => {
+  // let ids = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 25, 26, 38, 39, 51, 52, 64, 65, 77, 78, 90, 91, 92, 93, 94, 95, 96, 97, 97, 98, 99, 100, 101, 102, 103]
+  let ids = _.concat(_.range(0, 26), _.range(78, 104), [26, 27, 50, 51, 52, 53, 76, 77, 78, 79, 37, 38, 39, 40, 63, 64, 65, 66])
+  console.debug(ids)
+
+  ids.forEach(id => {
+    pixels[id].l = 50
+    createjs.Tween.get(pixels[id]).to({ l: LIGHTNESS_MIN }, 700)
+  })
+}
 
 let tweenGlobalHueChanged = () => {
   pixels.forEach((pixel) => {
@@ -57,6 +69,22 @@ let tweenIdle = () => {
 }
 // tweenIdle()
 
+let audioDrumKick = () => {
+  let audio = document.querySelector('.drum-kit')
+  console.debug(audio)
+  audio.src = 'assets/CYCdh_ElecK03-Kick02.mp3'
+  audio.currentTime = 0
+  audio.play()
+}
+
+let audioDrumSnr = () => {
+  let audio = document.querySelector('.drum-kit')
+  console.debug(audio)
+  audio.src = 'assets/CYCdh_K2room_Snr-03.mp3'
+  audio.currentTime = 0
+  audio.play()
+}
+
 // keyboard event
 window.addEventListener('keydown', (e) => {
   // alert(e.keyCode)
@@ -64,8 +92,18 @@ window.addEventListener('keydown', (e) => {
     case 65: // A
       socket.emit('userInterface', '[Bass Drum] (A)')
       tweenDrumKick()
+      audioDrumKick()
+      break
+    case 83: // S
+      tweenDrumSnr()
+      audioDrumSnr()
+      break
+    case 68: // D
+      break
+    case 70: // F
       break
     default:
+      console.debug(e.keyCode)
       break
   }
 })

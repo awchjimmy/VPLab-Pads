@@ -10,7 +10,7 @@ app.set('view engine', 'pug')
 app.use(express.static('public'))
 
 // config
-const port = 3003
+const port = 3000
 // const udpHost = '192.168.43.198'
 const udpHost = '192.168.0.3'
 const udpPort = '7777'
