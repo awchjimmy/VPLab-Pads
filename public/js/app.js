@@ -21,6 +21,7 @@ _.range(TOTAL_LEDS).forEach(id => {
   d = new Pixel(id)
   pixels.push(d)
 })
+let keyloggerArray = []
 
 // animation part
 let tweenDrumKick = () => {
@@ -102,10 +103,18 @@ window.addEventListener('keydown', (e) => {
       break
     case 70: // F
       break
+    case 80: // P print keyloggerArray
+      console.debug('keylogger Array:')
+      console.debug(_.map(keyloggerArray, item => {
+        return { key: item['key'], timing: item['timing'] - keyloggerArray[0]['timing'] }
+      }
+      ))
+      break;
     default:
       console.debug(e.keyCode)
       break
   }
+  keyloggerArray.push({ key: e.keyCode, timing: + new Date() })
 })
 
 // web simulator
