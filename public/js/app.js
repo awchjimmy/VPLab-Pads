@@ -22,6 +22,7 @@ _.range(TOTAL_LEDS).forEach(id => {
   pixels.push(d)
 })
 let keyloggerArray = []
+let bgm = document.querySelector('audio.bgm')
 
 // animation part
 let tweenDrumKick = () => {
@@ -98,7 +99,16 @@ let debugDisplayKeyboardTiming = () => {
   ))
 }
 
+let startBackgroundMusic = () => {
+  bgm.currentTime = 0
+  bgm.play()
+}
+
 let playbackKeyboardTiming = () => {
+  // bgm playback
+  startBackgroundMusic()
+
+  // drum kit playback
   _.forEach(keyloggerArray, item => {
     setTimeout(() => {
       switch (item['key']) {
@@ -113,6 +123,15 @@ let playbackKeyboardTiming = () => {
       console.debug('item timing', item['timing'] - keyloggerArray[0]['timing'])
     }, item['timing'] - keyloggerArray[0]['timing'])
   })
+
+  // output json
+  console.log(
+    JSON.stringify(
+      _.map(keyloggerArray, item => {
+        return { key: item['key'], timing: item['timing'] - keyloggerArray[0]['timing'] }
+      })
+    )
+  )
 }
 
 let trigger_A = () => {
@@ -122,9 +141,10 @@ let trigger_A = () => {
 }
 
 let trigger_S = () => {
+  socket.emit('userInterface', '[Snare] (S)')
   tweenDrumSnr()
   audioDrumSnr()
-  console.log('trigger S')
+  console.debug('trigger S')
 }
 
 // keyboard event
@@ -145,6 +165,8 @@ window.addEventListener('keydown', (e) => {
       debugDisplayKeyboardTiming()
       playbackKeyboardTiming()
       break;
+    case 81: // Q bgm start
+      startBackgroundMusic()
     default:
       console.debug(e.keyCode)
       break
