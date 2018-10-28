@@ -86,35 +86,70 @@ let audioDrumSnr = () => {
   audio.play()
 }
 
+let recordKeyboard = (keyCode) => {
+  keyloggerArray.push({ key: keyCode, timing: + new Date() })
+}
+
+let debugDisplayKeyboardTiming = () => {
+  console.debug('keylogger Array:')
+  console.debug(_.map(keyloggerArray, item => {
+    return { key: item['key'], timing: item['timing'] - keyloggerArray[0]['timing'] }
+  }
+  ))
+}
+
+let playbackKeyboardTiming = () => {
+  _.forEach(keyloggerArray, item => {
+    setTimeout(() => {
+      switch (item['key']) {
+        case 65: // A
+          trigger_A()
+          break
+        case 83: // S
+          trigger_S()
+        default:
+          break
+      }
+      console.debug('item timing', item['timing'] - keyloggerArray[0]['timing'])
+    }, item['timing'] - keyloggerArray[0]['timing'])
+  })
+}
+
+let trigger_A = () => {
+  socket.emit('userInterface', '[Bass Drum] (A)')
+  tweenDrumKick()
+  audioDrumKick()
+}
+
+let trigger_S = () => {
+  tweenDrumSnr()
+  audioDrumSnr()
+  console.log('trigger S')
+}
+
 // keyboard event
 window.addEventListener('keydown', (e) => {
   // alert(e.keyCode)
   switch (e.keyCode) {
     case 65: // A
-      socket.emit('userInterface', '[Bass Drum] (A)')
-      tweenDrumKick()
-      audioDrumKick()
+      trigger_A()
       break
     case 83: // S
-      tweenDrumSnr()
-      audioDrumSnr()
+      trigger_S()
       break
     case 68: // D
       break
     case 70: // F
       break
     case 80: // P print keyloggerArray
-      console.debug('keylogger Array:')
-      console.debug(_.map(keyloggerArray, item => {
-        return { key: item['key'], timing: item['timing'] - keyloggerArray[0]['timing'] }
-      }
-      ))
+      debugDisplayKeyboardTiming()
+      playbackKeyboardTiming()
       break;
     default:
       console.debug(e.keyCode)
       break
   }
-  keyloggerArray.push({ key: e.keyCode, timing: + new Date() })
+  recordKeyboard(e.keyCode)
 })
 
 // web simulator
