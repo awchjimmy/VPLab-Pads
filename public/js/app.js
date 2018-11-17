@@ -30,6 +30,7 @@ let tweenDrumKick = () => {
   let ids = _.range(104)
 
   ids.forEach(id => {
+    
     pixels[id].l = 50
     createjs.Tween.get(pixels[id]).to({ l: LIGHTNESS_MIN }, 700)
   })
@@ -72,6 +73,7 @@ let tweenIdle = () => {
 // tweenIdle()
 
 let audioDrumKick = () => {
+  return
   let audio = document.querySelector('.drum-kit')
   console.debug(audio)
   audio.src = 'assets/CYCdh_ElecK03-Kick02.mp3'
@@ -80,6 +82,7 @@ let audioDrumKick = () => {
 }
 
 let audioDrumSnr = () => {
+  return
   let audio = document.querySelector('.drum-kit')
   console.debug(audio)
   audio.src = 'assets/CYCdh_K2room_Snr-03.mp3'
@@ -146,6 +149,86 @@ let trigger_S = () => {
   audioDrumSnr()
   console.debug('trigger S')
 }
+/*Allen Code */
+let breath = (id, period, h, s , l, loop) => {
+  pixels[id].h = h
+  pixels[id].s = s
+  pixels[id].l = 0
+  
+  createjs.Tween.get(pixels[id], {loop: loop})
+    .to({l: l}, period)
+    .to({l: 0}, period)
+}
+// breath()
+
+let randomFlash = () =>{
+
+  for(i = 0; i < 100 ; i++){
+    id = _.random(0, 104)
+
+    breath(id, _.random(1000, 5000), _.random(0, 360), 100, _.random(70, 100), true)
+  }
+}
+
+/*<< Wave Strip Flow >>
+  strip: number of the strip number, strip direction from door to in.(0 ~ 7)
+  direction = 0/1 1:in to door, 0:door to in
+*/
+let waveFlowStrip = (strip, direction, period, h, s, l) =>{
+
+  start = strip * 13 + ((strip + direction) % 2) * 12
+  let ids = _.range(start, start + 13 * (-1)**(strip + direction))
+  counter = 0
+  console.log(ids)
+
+  ids.forEach(id =>{
+    setTimeout(() =>{
+      breath(id, period, h, s, l,false)
+    }, 50 * counter)
+  
+    counter++
+  })
+}
+
+let coordinateConversion = (x, y) =>{
+  if(x > 13 || x < 1 || y > 8 || y < 1)
+    return
+  
+  else if(y % 2)
+    return y * 13 + x - 14
+  
+  else 
+    return y * 13 - x
+}
+
+let firework = (x, y) =>{
+  // let distance = [13][8]
+  counter = 0
+  let distance = {}
+
+  for(local_x = 1; local_x <= 13; local_x++)
+  {
+    for(local_y = 1; local_y <= 8; local_y++)
+    {
+      distance[local_x] = distance[local_x] || {}
+      distance[local_x][local_y] = ( Math.sqrt((local_x - x)**2 + (local_y - y) ** 2))
+    }
+  }
+  console.log(distance)
+
+  for(let local_x = 1; local_x <= 13; local_x++)
+  {
+    for(let local_y = 1; local_y <= 8; local_y++)
+    {
+      setTimeout(() =>{
+        let small_x = local_x
+        let small_y = local_y
+
+        breath( coordinateConversion( small_x, small_y), 500, 0, 50, 50, false)
+      }, 200 * distance[ local_x][ local_y])
+    }
+  }
+}
 
 // keyboard event
 window.addEventListener('keydown', (e) => {
@@ -158,8 +241,13 @@ window.addEventListener('keydown', (e) => {
       trigger_S()
       break
     case 68: // D
+      randomFlash()
       break
     case 70: // F
+      // breath(2, 2000, 90 , 100 , 50)
+      // randomFlash()
+      // waveFlowStrip(0, 0, 100, 0, 100, 50)
+      firework(1, 1)
       break
     case 80: // P print keyloggerArray
       debugDisplayKeyboardTiming()

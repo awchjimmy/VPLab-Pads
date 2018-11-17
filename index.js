@@ -12,7 +12,7 @@ app.use(express.static('public'))
 // config
 const port = 3000
 // const udpHost = '192.168.43.198'
-const udpHost = '192.168.0.3'
+const udpHost = '192.168.4.1'
 const udpPort = '7777'
 const udpClient = dgram.createSocket('udp4')
 
