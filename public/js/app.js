@@ -30,7 +30,7 @@ let tweenDrumKick = () => {
   let ids = _.range(104)
 
   ids.forEach(id => {
-    
+
     pixels[id].l = 50
     createjs.Tween.get(pixels[id]).to({ l: LIGHTNESS_MIN }, 700)
   })
@@ -53,7 +53,7 @@ let tweenGlobalHueChanged = () => {
     createjs.Tween.get(pixel, { loop: true, bounce: true }).to({ h: 0 }, 14000)
   })
 }
-tweenGlobalHueChanged()
+// tweenGlobalHueChanged()
 
 let tweenHeart = () => {
   let ids = [45, 31, 30, 42, 55, 69, 83, 84, 85, 73, 61, 48, 34, 33, 43, 44, 46, 47, 56, 57, 58, 59, 60, 70, 71, 72]
@@ -150,82 +150,93 @@ let trigger_S = () => {
   console.debug('trigger S')
 }
 /*Allen Code */
-let breath = (id, period, h, s , l, loop) => {
+let breath = (id, period, h, s, l, loop) => {
   pixels[id].h = h
   pixels[id].s = s
   pixels[id].l = 0
-  
-  createjs.Tween.get(pixels[id], {loop: loop})
-    .to({l: l}, period)
-    .to({l: 0}, period)
+
+  createjs.Tween.get(pixels[id], { loop: loop })
+    .to({ l: l }, period)
+    .to({ l: 0 }, period)
 }
 // breath()
 
-let randomFlash = () =>{
+let randomFlash = () => {
 
-  for(i = 0; i < 100 ; i++){
+  for (i = 0; i < 100; i++) {
     id = _.random(0, 104)
 
     breath(id, _.random(1000, 5000), _.random(0, 360), 100, _.random(70, 100), true)
   }
 }
 
+// Jimmy's Code
+let randomFlash2 = () => {
+  ids = _.range(TOTAL_LEDS)
+
+  _.forEach(ids, id => {
+    const interval = _.random(2000, 5000)
+    const hue = 56 // yellow
+    const saturation = 100
+    const lightness = _.random(80, 100)
+    const loop = true
+
+    breath(id, interval, hue, saturation, lightness, loop)
+  })
+}
+
 /*<< Wave Strip Flow >>
   strip: number of the strip number, strip direction from door to in.(0 ~ 7)
   direction = 0/1 1:in to door, 0:door to in
 */
-let waveFlowStrip = (strip, direction, period, h, s, l) =>{
+let waveFlowStrip = (strip, direction, period, h, s, l) => {
 
   start = strip * 13 + ((strip + direction) % 2) * 12
-  let ids = _.range(start, start + 13 * (-1)**(strip + direction))
+  let ids = _.range(start, start + 13 * (-1) ** (strip + direction))
   counter = 0
   console.log(ids)
 
-  ids.forEach(id =>{
-    setTimeout(() =>{
-      breath(id, period, h, s, l,false)
+  ids.forEach(id => {
+    setTimeout(() => {
+      breath(id, period, h, s, l, false)
     }, 50 * counter)
-  
+
     counter++
   })
 }
 
-let coordinateConversion = (x, y) =>{
-  if(x > 13 || x < 1 || y > 8 || y < 1)
+let coordinateConversion = (x, y) => {
+  if (x > 13 || x < 1 || y > 8 || y < 1)
     return
-  
-  else if(y % 2)
+
+  else if (y % 2)
     return y * 13 + x - 14
-  
-  else 
+
+  else
     return y * 13 - x
 }
 
-let firework = (x, y) =>{
+let firework = (x, y) => {
   // let distance = [13][8]
   counter = 0
   let distance = {}
 
-  for(local_x = 1; local_x <= 13; local_x++)
-  {
-    for(local_y = 1; local_y <= 8; local_y++)
-    {
+  for (local_x = 1; local_x <= 13; local_x++) {
+    for (local_y = 1; local_y <= 8; local_y++) {
       distance[local_x] = distance[local_x] || {}
-      distance[local_x][local_y] = ( Math.sqrt((local_x - x)**2 + (local_y - y) ** 2))
+      distance[local_x][local_y] = (Math.sqrt((local_x - x) ** 2 + (local_y - y) ** 2))
     }
   }
   console.log(distance)
 
-  for(let local_x = 1; local_x <= 13; local_x++)
-  {
-    for(let local_y = 1; local_y <= 8; local_y++)
-    {
-      setTimeout(() =>{
+  for (let local_x = 1; local_x <= 13; local_x++) {
+    for (let local_y = 1; local_y <= 8; local_y++) {
+      setTimeout(() => {
         let small_x = local_x
         let small_y = local_y
 
-        breath( coordinateConversion( small_x, small_y), 500, 0, 50, 50, false)
-      }, 200 * distance[ local_x][ local_y])
+        breath(coordinateConversion(small_x, small_y), 500, 0, 50, 50, false)
+      }, 200 * distance[local_x][local_y])
     }
   }
 }
@@ -241,7 +252,7 @@ window.addEventListener('keydown', (e) => {
       trigger_S()
       break
     case 68: // D
-      randomFlash()
+      randomFlash2()
       break
     case 70: // F
       // breath(2, 2000, 90 , 100 , 50)
