@@ -189,7 +189,7 @@ let randomFlash2 = () => {
   strip: number of the strip number, strip direction from door to in.(0 ~ 7)
   direction = 0/1 1:in to door, 0:door to in
 */
-let waveFlowStrip = (strip, direction, period, h, s, l) => {
+let waveFlowStrip = (strip, direction, period, h = 0, s = 0, l = 100) => {
 
   start = strip * 13 + ((strip + direction) % 2) * 12
   let ids = _.range(start, start + 13 * (-1) ** (strip + direction))
@@ -202,6 +202,16 @@ let waveFlowStrip = (strip, direction, period, h, s, l) => {
     }, 50 * counter)
 
     counter++
+  })
+}
+
+// Jimmy's Code
+let waveFlowStrip2 = (ids) => {
+  _.forEach(ids, (id, idx) => {
+    setTimeout(() => {
+      const period = 500
+      breath(id, period, 0, 0, 100, false) // white
+    }, 3000 / ids.length * idx)
   })
 }
 
@@ -235,7 +245,7 @@ let firework = (x, y) => {
         let small_x = local_x
         let small_y = local_y
 
-        breath(coordinateConversion(small_x, small_y), 500, 0, 50, 50, false)
+        breath(coordinateConversion(small_x, small_y), 500, 0, 0, 100, false)
       }, 200 * distance[local_x][local_y])
     }
   }
@@ -246,10 +256,17 @@ window.addEventListener('keydown', (e) => {
   // alert(e.keyCode)
   switch (e.keyCode) {
     case 65: // A
-      trigger_A()
+      // trigger_A()
+      waveFlowStrip2([0, 1, 2, 3, 4, 5, 6, 18, 34, 42, 62, 66, 90, 91])
+      waveFlowStrip2([0, 24, 28, 29, 47, 46, 58, 59, 69, 68, 88, 89, 91])
+      waveFlowStrip2([0, 25, 26, 50, 53, 76, 80, 100, 99, 98, 97, 96, 95, 94, 93, 92, 91])
+
       break
     case 83: // S
-      trigger_S()
+      // trigger_S()
+      waveFlowStrip(0, 0, 500)
+      waveFlowStrip(2, 0, 500)
+      waveFlowStrip(4, 0, 500)
       break
     case 68: // D
       randomFlash2()
@@ -258,7 +275,7 @@ window.addEventListener('keydown', (e) => {
       // breath(2, 2000, 90 , 100 , 50)
       // randomFlash()
       // waveFlowStrip(0, 0, 100, 0, 100, 50)
-      firework(1, 1)
+      firework(13, 8)
       break
     case 80: // P print keyloggerArray
       debugDisplayKeyboardTiming()
