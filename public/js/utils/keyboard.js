@@ -10,9 +10,6 @@ export const recordKeyboard = (keyCode) => {
 
 
 export const replayKeyboard = (keySequence) => {
-    // bgm playback
-    startPlayback(bgm, 'assets/0002.mp3')
-
     // drum kit playback
     _.forEach(keySequence, item => {
         setTimeout(() => {

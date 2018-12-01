@@ -8,6 +8,9 @@ import { recordKeyboard, keyloggerArray, replayKeyboard } from './utils/keyboard
 // animation effects
 import { tweenDrumKick } from './tweenEffects/tweenDrumKick.js'
 
+// keyboard record playback
+import { file0002 } from './file0002.js'
+
 // socket.io
 const socket = io()
 
@@ -96,13 +99,13 @@ let playbackKeyboardTiming = () => {
   })
 
   // output json
-  // console.log(
-  //   JSON.stringify(
-  //     _.map(keyloggerArray, item => {
-  //       return { key: item['key'], timing: item['timing'] - keyloggerArray[0]['timing'] }
-  //     })
-  //   )
-  // )
+  console.log(
+    JSON.stringify(
+      _.map(keyloggerArray, item => {
+        return { key: item['key'], timing: item['timing'] - keyloggerArray[0]['timing'] }
+      })
+    )
+  )
 }
 
 let trigger_A = () => {
@@ -293,7 +296,7 @@ window.addEventListener('keydown', (e) => {
       startPlayback(bgm, 'assets/0004.mp3')
       break
     case 87: // W
-      const file0002 = [{ "key": 88, "timing": 0 }, { "key": 51, "timing": 1930 }, { "key": 51, "timing": 2941 }, { "key": 51, "timing": 3906 }, { "key": 51, "timing": 4108 }, { "key": 51, "timing": 4900 }, { "key": 51, "timing": 5835 }, { "key": 51, "timing": 6048 }, { "key": 51, "timing": 6855 }, { "key": 51, "timing": 7785 }, { "key": 51, "timing": 8095 }]
+      startPlayback(bgm, 'assets/0002.mp3')
       replayKeyboard(file0002)
       break
     case 88: // X
