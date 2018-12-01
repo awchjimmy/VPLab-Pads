@@ -1,4 +1,4 @@
-import { startPlayback } from './audio-utils.js'
+import { startPlayback, audioDrumKick, audioDrumSnr } from './audio-utils.js'
 import { registerWebSimulator } from './web-simulator.js'
 import { TOTAL_LEDS, FPS, LIGHTNESS_MIN } from './constants.js'
 import { coordinateConversion } from './tween-utils.js'
@@ -7,7 +7,6 @@ import { coordinateConversion } from './tween-utils.js'
 // socket.io
 const socket = io()
 const bgm = document.querySelector('audio.bgm')
-const drum = document.querySelector('.drum-kit')
 
 // data definition
 class Pixel {
@@ -75,23 +74,6 @@ let tweenIdle = () => {
 }
 // tweenIdle()
 
-let audioDrumKick = () => {
-  return
-  let audio = document.querySelector('.drum-kit')
-  console.debug(audio)
-  audio.src = 'assets/CYCdh_ElecK03-Kick02.mp3'
-  audio.currentTime = 0
-  audio.play()
-}
-
-let audioDrumSnr = () => {
-  return
-  let audio = document.querySelector('.drum-kit')
-  console.debug(audio)
-  audio.src = 'assets/CYCdh_K2room_Snr-03.mp3'
-  audio.currentTime = 0
-  audio.play()
-}
 
 let recordKeyboard = (keyCode) => {
   keyloggerArray.push({ key: keyCode, timing: + new Date() })
@@ -276,6 +258,12 @@ let beat = (x, y) => {
 window.addEventListener('keydown', (e) => {
   // alert(e.keyCode)
   switch (e.keyCode) {
+    case 49: // 1
+      audioDrumKick()
+      break
+    case 50: // 2
+      audioDrumSnr()
+      break
     case 65: // A
       // trigger_A()
       waveFlowStrip2([0, 1, 2, 3, 4, 5, 6, 18, 34, 42, 62, 66, 90, 91])
