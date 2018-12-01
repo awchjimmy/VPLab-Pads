@@ -3,13 +3,13 @@ import { registerWebSimulator } from './utils/simulator.js'
 import { _, TOTAL_LEDS, FPS, LIGHTNESS_MIN, bgm } from './constants.js'
 import { coordinateConversion } from './utils/tween.js'
 import { pixels, initPixels } from './utils/buffer.js'
+import { recordKeyboard, keyloggerArray, replayKeyboard } from './utils/keyboard.js'
 
 // animation effects
 import { tweenDrumKick } from './tweenEffects/tweenDrumKick.js'
 
 // socket.io
 const socket = io()
-let keyloggerArray = []
 
 initPixels()
 
@@ -52,9 +52,7 @@ let tweenIdle = () => {
 // tweenIdle()
 
 
-let recordKeyboard = (keyCode) => {
-  keyloggerArray.push({ key: keyCode, timing: + new Date() })
-}
+
 
 let debugDisplayKeyboardTiming = () => {
   console.debug('keylogger Array:')
@@ -98,13 +96,13 @@ let playbackKeyboardTiming = () => {
   })
 
   // output json
-  console.log(
-    JSON.stringify(
-      _.map(keyloggerArray, item => {
-        return { key: item['key'], timing: item['timing'] - keyloggerArray[0]['timing'] }
-      })
-    )
-  )
+  // console.log(
+  //   JSON.stringify(
+  //     _.map(keyloggerArray, item => {
+  //       return { key: item['key'], timing: item['timing'] - keyloggerArray[0]['timing'] }
+  //     })
+  //   )
+  // )
 }
 
 let trigger_A = () => {
@@ -293,6 +291,9 @@ window.addEventListener('keydown', (e) => {
       break
     case 86: // V
       startPlayback(bgm, 'assets/0004.mp3')
+      break
+    case 87: // W
+      replayKeyboard()
       break
     case 88: // X
       startPlayback(bgm, 'assets/0002.mp3')
