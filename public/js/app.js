@@ -251,6 +251,37 @@ let firework = (x, y) => {
   }
 }
 
+let beat = (x, y) => {
+  // let distance = [13][8]
+  counter = 0
+  let distance = {}
+
+  for (local_x = 1; local_x <= 13; local_x++) {
+    for (local_y = 1; local_y <= 8; local_y++) {
+      distance[local_x] = distance[local_x] || {}
+      distance[local_x][local_y] = (Math.sqrt((local_x - x) ** 2 + (local_y - y) ** 2))
+    }
+  }
+  console.log(distance)
+
+  for (let local_x = 1; local_x <= 13; local_x++) {
+    for (let local_y = 1; local_y <= 8; local_y++) {
+      setTimeout(() => {
+        let small_x = local_x
+        let small_y = local_y
+
+        breath(coordinateConversion(small_x, small_y), 100, 0, 0, 100, false)
+      }, 100 * distance[local_x][local_y])
+    }
+  }
+}
+
+const startPlayback = (mp3Url) => {
+  bgm.src = mp3Url
+  bgm.currentTime = 0
+  bgm.play()
+}
+
 // keyboard event
 window.addEventListener('keydown', (e) => {
   // alert(e.keyCode)
@@ -261,6 +292,12 @@ window.addEventListener('keydown', (e) => {
       waveFlowStrip2([0, 24, 28, 29, 47, 46, 58, 59, 69, 68, 88, 89, 91])
       waveFlowStrip2([0, 25, 26, 50, 53, 76, 80, 100, 99, 98, 97, 96, 95, 94, 93, 92, 91])
 
+      break
+    case 66: // B
+      startPlayback('assets/0005.mp3')
+      break
+    case 67: // C
+      startPlayback('assets/0003.mp3')
       break
     case 83: // S
       // trigger_S()
@@ -283,6 +320,16 @@ window.addEventListener('keydown', (e) => {
       break;
     case 81: // Q bgm start
       startBackgroundMusic()
+      break
+    case 86: // V
+      startPlayback('assets/0004.mp3')
+      break
+    case 88: // X
+      startPlayback('assets/0002.mp3')
+      break
+    case 90: // Z
+      startPlayback('assets/0001.mp3')
+      break
     default:
       console.debug(e.keyCode)
       break
