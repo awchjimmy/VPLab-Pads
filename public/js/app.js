@@ -1,8 +1,11 @@
 import { startPlayback, audioDrumKick, audioDrumSnr, audioDrumHiHat, audioDrumClap } from './utils/audio.js'
 import { registerWebSimulator } from './utils/simulator.js'
-import { TOTAL_LEDS, FPS, LIGHTNESS_MIN, bgm } from './constants.js'
+import { _, TOTAL_LEDS, FPS, LIGHTNESS_MIN, bgm } from './constants.js'
 import { coordinateConversion } from './utils/tween.js'
 import { pixels, initPixels } from './utils/buffer.js'
+
+// animation effects
+import { tweenDrumKick } from './tweenEffects/tweenDrumKick.js'
 
 // socket.io
 const socket = io()
@@ -11,16 +14,6 @@ let keyloggerArray = []
 initPixels()
 
 // animation part
-let tweenDrumKick = () => {
-  // let ids = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 25, 26, 38, 39, 51, 52, 64, 65, 77, 78, 90, 91, 92, 93, 94, 95, 96, 97, 97, 98, 99, 100, 101, 102, 103]
-  let ids = _.range(104)
-
-  ids.forEach(id => {
-
-    pixels[id].l = 50
-    createjs.Tween.get(pixels[id]).to({ l: LIGHTNESS_MIN }, 700)
-  })
-}
 tweenDrumKick()
 
 let tweenDrumSnr = () => {
@@ -244,6 +237,7 @@ window.addEventListener('keydown', (e) => {
   switch (e.keyCode) {
     case 49: // 1
       audioDrumKick()
+      tweenDrumKick()
       break
     case 50: // 2
       audioDrumSnr()
