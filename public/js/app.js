@@ -1,6 +1,8 @@
-const TOTAL_LEDS = 104
-const FPS = 60
-const LIGHTNESS_MIN = 0
+import { startPlayback } from './audio-utils.js'
+import { registerWebSimulator } from './web-simulator.js'
+import { TOTAL_LEDS, FPS, LIGHTNESS_MIN } from './constants.js'
+
+
 
 // socket.io
 let socket = io()
@@ -16,9 +18,9 @@ class Pixel {
 }
 
 // data initialization
-pixels = []
+let pixels = []
 _.range(TOTAL_LEDS).forEach(id => {
-  d = new Pixel(id)
+  let d = new Pixel(id)
   pixels.push(d)
 })
 let keyloggerArray = []
@@ -276,11 +278,7 @@ let beat = (x, y) => {
   }
 }
 
-const startPlayback = (mp3Url) => {
-  bgm.src = mp3Url
-  bgm.currentTime = 0
-  bgm.play()
-}
+
 
 // keyboard event
 window.addEventListener('keydown', (e) => {
@@ -294,10 +292,10 @@ window.addEventListener('keydown', (e) => {
 
       break
     case 66: // B
-      startPlayback('assets/0005.mp3')
+      startPlayback(bgm, 'assets/0005.mp3')
       break
     case 67: // C
-      startPlayback('assets/0003.mp3')
+      startPlayback(bgm, 'assets/0003.mp3')
       break
     case 83: // S
       // trigger_S()
@@ -322,13 +320,13 @@ window.addEventListener('keydown', (e) => {
       startBackgroundMusic()
       break
     case 86: // V
-      startPlayback('assets/0004.mp3')
+      startPlayback(bgm, 'assets/0004.mp3')
       break
     case 88: // X
-      startPlayback('assets/0002.mp3')
+      startPlayback(bgm, 'assets/0002.mp3')
       break
     case 90: // Z
-      startPlayback('assets/0001.mp3')
+      startPlayback(bgm, 'assets/0001.mp3')
       break
     default:
       console.debug(e.keyCode)
@@ -338,15 +336,4 @@ window.addEventListener('keydown', (e) => {
 })
 
 // web simulator
-let display = () => {
-  setInterval(() => {
-    d3
-      .selectAll("div.pixel")
-      .data(pixels)
-      .style("background-color", ({ h, s, l }) => {
-        return `hsl(${h}, ${s}%, ${l}%)`
-      })
-    socket.emit('hslPixelsToBackend', pixels)
-  }, 1000 / FPS)
-}
-display()
+registerWebSimulator(pixels, socket, FPS)
