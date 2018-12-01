@@ -77,14 +77,22 @@ let playbackKeyboardTiming = () => {
   _.forEach(keyloggerArray, item => {
     setTimeout(() => {
       switch (item['key']) {
-        case 65: // A
-          trigger_A()
+        case 49: // 1
+          audioDrumKick()
           break
-        case 83: // S
-          trigger_S()
+        case 50: // 2
+          audioDrumSnr()
+          break
+        case 51: // 3
+          audioDrumHiHat()
+          break
+        case 52: // 4
+          audioDrumClap()
+          break
         default:
           break
       }
+
       console.debug('item timing', item['timing'] - keyloggerArray[0]['timing'])
     }, item['timing'] - keyloggerArray[0]['timing'])
   })
