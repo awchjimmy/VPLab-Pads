@@ -1,30 +1,14 @@
-import { startPlayback, audioDrumKick, audioDrumSnr, audioDrumHiHat, audioDrumClap } from './audio-utils.js'
-import { registerWebSimulator } from './web-simulator.js'
-import { TOTAL_LEDS, FPS, LIGHTNESS_MIN } from './constants.js'
-import { coordinateConversion } from './tween-utils.js'
-
+import { startPlayback, audioDrumKick, audioDrumSnr, audioDrumHiHat, audioDrumClap } from './utils/audio.js'
+import { registerWebSimulator } from './utils/simulator.js'
+import { TOTAL_LEDS, FPS, LIGHTNESS_MIN, bgm } from './constants.js'
+import { coordinateConversion } from './utils/tween.js'
+import { pixels, initPixels } from './utils/buffer.js'
 
 // socket.io
 const socket = io()
-const bgm = document.querySelector('audio.bgm')
-
-// data definition
-class Pixel {
-  constructor(id) {
-    this.id = id
-    this.h = 256
-    this.s = 100
-    this.l = 30
-  }
-}
-
-// data initialization
-let pixels = []
-_.range(TOTAL_LEDS).forEach(id => {
-  let d = new Pixel(id)
-  pixels.push(d)
-})
 let keyloggerArray = []
+
+initPixels()
 
 // animation part
 let tweenDrumKick = () => {
