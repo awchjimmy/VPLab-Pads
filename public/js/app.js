@@ -1,11 +1,13 @@
 import { startPlayback } from './audio-utils.js'
 import { registerWebSimulator } from './web-simulator.js'
 import { TOTAL_LEDS, FPS, LIGHTNESS_MIN } from './constants.js'
-
+import { coordinateConversion } from './tween-utils.js'
 
 
 // socket.io
-let socket = io()
+const socket = io()
+const bgm = document.querySelector('audio.bgm')
+const drum = document.querySelector('.drum-kit')
 
 // data definition
 class Pixel {
@@ -24,7 +26,6 @@ _.range(TOTAL_LEDS).forEach(id => {
   pixels.push(d)
 })
 let keyloggerArray = []
-let bgm = document.querySelector('audio.bgm')
 
 // animation part
 let tweenDrumKick = () => {
@@ -174,7 +175,7 @@ let randomFlash = () => {
 
 // Jimmy's Code
 let randomFlash2 = () => {
-  ids = _.range(TOTAL_LEDS)
+  let ids = _.range(TOTAL_LEDS)
 
   _.forEach(ids, id => {
     const interval = _.random(2000, 5000)
@@ -193,9 +194,9 @@ let randomFlash2 = () => {
 */
 let waveFlowStrip = (strip, direction, period, h = 0, s = 0, l = 100) => {
 
-  start = strip * 13 + ((strip + direction) % 2) * 12
+  let start = strip * 13 + ((strip + direction) % 2) * 12
   let ids = _.range(start, start + 13 * (-1) ** (strip + direction))
-  counter = 0
+  let counter = 0
   console.log(ids)
 
   ids.forEach(id => {
@@ -217,24 +218,15 @@ let waveFlowStrip2 = (ids) => {
   })
 }
 
-let coordinateConversion = (x, y) => {
-  if (x > 13 || x < 1 || y > 8 || y < 1)
-    return
 
-  else if (y % 2)
-    return y * 13 + x - 14
-
-  else
-    return y * 13 - x
-}
 
 let firework = (x, y) => {
   // let distance = [13][8]
-  counter = 0
+  let counter = 0
   let distance = {}
 
-  for (local_x = 1; local_x <= 13; local_x++) {
-    for (local_y = 1; local_y <= 8; local_y++) {
+  for (let local_x = 1; local_x <= 13; local_x++) {
+    for (let local_y = 1; local_y <= 8; local_y++) {
       distance[local_x] = distance[local_x] || {}
       distance[local_x][local_y] = (Math.sqrt((local_x - x) ** 2 + (local_y - y) ** 2))
     }
