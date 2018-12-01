@@ -1,4 +1,4 @@
-import { startPlayback, audioDrumKick, audioDrumSnr } from './audio-utils.js'
+import { startPlayback, audioDrumKick, audioDrumSnr, audioDrumHiHat, audioDrumClap } from './audio-utils.js'
 import { registerWebSimulator } from './web-simulator.js'
 import { TOTAL_LEDS, FPS, LIGHTNESS_MIN } from './constants.js'
 import { coordinateConversion } from './tween-utils.js'
@@ -263,6 +263,12 @@ window.addEventListener('keydown', (e) => {
       break
     case 50: // 2
       audioDrumSnr()
+      break
+    case 51: // 3
+      audioDrumHiHat()
+      break
+    case 52: // 4
+      audioDrumClap()
       break
     case 65: // A
       // trigger_A()
