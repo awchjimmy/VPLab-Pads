@@ -8,12 +8,13 @@ export const recordKeyboard = (keyCode) => {
     keyloggerArray.push({ key: keyCode, timing: + new Date() })
 }
 
-export const replayKeyboard = () => {
+
+export const replayKeyboard = (keySequence) => {
     // bgm playback
     startPlayback(bgm, 'assets/0002.mp3')
 
     // drum kit playback
-    _.forEach(keyloggerArray, item => {
+    _.forEach(keySequence, item => {
         setTimeout(() => {
             switch (item['key']) {
                 case 49: // 1
@@ -32,15 +33,15 @@ export const replayKeyboard = () => {
                     break
             }
 
-            console.debug('item timing', item['timing'] - keyloggerArray[0]['timing'])
-        }, item['timing'] - keyloggerArray[0]['timing'])
+            console.debug('item timing', item['timing'] - keySequence[0]['timing'])
+        }, item['timing'] - keySequence[0]['timing'])
     })
 
     // output json
     console.log(
         JSON.stringify(
-            _.map(keyloggerArray, item => {
-                return { key: item['key'], timing: item['timing'] - keyloggerArray[0]['timing'] }
+            _.map(keySequence, item => {
+                return { key: item['key'], timing: item['timing'] - keySequence[0]['timing'] }
             })
         )
     )

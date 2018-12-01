@@ -293,7 +293,8 @@ window.addEventListener('keydown', (e) => {
       startPlayback(bgm, 'assets/0004.mp3')
       break
     case 87: // W
-      replayKeyboard()
+      const file0002 = [{ "key": 88, "timing": 0 }, { "key": 51, "timing": 1930 }, { "key": 51, "timing": 2941 }, { "key": 51, "timing": 3906 }, { "key": 51, "timing": 4108 }, { "key": 51, "timing": 4900 }, { "key": 51, "timing": 5835 }, { "key": 51, "timing": 6048 }, { "key": 51, "timing": 6855 }, { "key": 51, "timing": 7785 }, { "key": 51, "timing": 8095 }]
+      replayKeyboard(file0002)
       break
     case 88: // X
       startPlayback(bgm, 'assets/0002.mp3')
