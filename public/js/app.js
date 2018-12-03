@@ -9,6 +9,7 @@ import { recordKeyboard, keyloggerArray, replayKeyboard } from './utils/keyboard
 import { tweenDrumKick } from './tweenEffects/tweenDrumKick.js'
 import { tweenBreath } from './tweenEffects/tweenBreath.js'
 import { tweenGlobalHueChange } from './tweenEffects/tweenGlobalHueChange.js'
+import { tweenRunningLights } from './tweenEffects/tweenRunningLights.js'
 
 // keyboard record playback
 import { file0002 } from './file0002.js'
@@ -160,15 +161,7 @@ let waveFlowStrip = (strip, direction, period, h = 0, s = 0, l = 100) => {
   })
 }
 
-// Jimmy's Code
-let waveFlowStrip2 = (ids) => {
-  _.forEach(ids, (id, idx) => {
-    setTimeout(() => {
-      const period = 500
-      tweenBreath(id, period, 0, 0, 100) // white
-    }, 3000 / ids.length * idx)
-  })
-}
+
 
 
 
@@ -243,9 +236,9 @@ window.addEventListener('keydown', (e) => {
       break
     case 65: // A
       // trigger_A()
-      waveFlowStrip2([0, 1, 2, 3, 4, 5, 6, 18, 34, 42, 62, 66, 90, 91])
-      waveFlowStrip2([0, 24, 28, 29, 47, 46, 58, 59, 69, 68, 88, 89, 91])
-      waveFlowStrip2([0, 25, 26, 50, 53, 76, 80, 100, 99, 98, 97, 96, 95, 94, 93, 92, 91])
+      tweenRunningLights([0, 1, 2, 3, 4, 5, 6, 18, 34, 42, 62, 66, 90, 91])
+      tweenRunningLights([0, 24, 28, 29, 47, 46, 58, 59, 69, 68, 88, 89, 91])
+      tweenRunningLights([0, 25, 26, 50, 53, 76, 80, 100, 99, 98, 97, 96, 95, 94, 93, 92, 91])
 
       break
     case 66: // B
