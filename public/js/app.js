@@ -7,6 +7,7 @@ import { recordKeyboard, keyloggerArray, replayKeyboard } from './utils/keyboard
 
 // animation effects
 import { tweenDrumKick } from './tweenEffects/tweenDrumKick.js'
+import { tweenBreath } from './tweenEffects/tweenBreath.js'
 
 // keyboard record playback
 import { file0002 } from './file0002.js'
@@ -120,24 +121,13 @@ let trigger_S = () => {
   audioDrumSnr()
   console.debug('trigger S')
 }
-/*Allen Code */
-let breath = (id, period, h, s, l, loop) => {
-  pixels[id].h = h
-  pixels[id].s = s
-  pixels[id].l = 0
-
-  createjs.Tween.get(pixels[id], { loop: loop })
-    .to({ l: l }, period)
-    .to({ l: 0 }, period)
-}
-// breath()
 
 let randomFlash = () => {
 
   for (i = 0; i < 100; i++) {
     id = _.random(0, 104)
 
-    breath(id, _.random(1000, 5000), _.random(0, 360), 100, _.random(70, 100), true)
+    tweenBreath(id, _.random(1000, 5000), _.random(0, 360), 100, _.random(70, 100))
   }
 }
 
@@ -150,9 +140,8 @@ let randomFlash2 = () => {
     const hue = 56 // yellow
     const saturation = 100
     const lightness = _.random(80, 100)
-    const loop = true
 
-    breath(id, interval, hue, saturation, lightness, loop)
+    tweenBreath(id, interval, hue, saturation, lightness)
   })
 }
 
@@ -169,7 +158,7 @@ let waveFlowStrip = (strip, direction, period, h = 0, s = 0, l = 100) => {
 
   ids.forEach(id => {
     setTimeout(() => {
-      breath(id, period, h, s, l, false)
+      tweenBreath(id, period, h, s, l)
     }, 50 * counter)
 
     counter++
@@ -181,7 +170,7 @@ let waveFlowStrip2 = (ids) => {
   _.forEach(ids, (id, idx) => {
     setTimeout(() => {
       const period = 500
-      breath(id, period, 0, 0, 100, false) // white
+      tweenBreath(id, period, 0, 0, 100) // white
     }, 3000 / ids.length * idx)
   })
 }
@@ -207,7 +196,7 @@ let firework = (x, y) => {
         let small_x = local_x
         let small_y = local_y
 
-        breath(coordinateConversion(small_x, small_y), 500, 0, 0, 100, false)
+        tweenBreath(coordinateConversion(small_x, small_y), 500, 0, 0, 100)
       }, 200 * distance[local_x][local_y])
     }
   }
@@ -232,7 +221,7 @@ let beat = (x, y) => {
         let small_x = local_x
         let small_y = local_y
 
-        breath(coordinateConversion(small_x, small_y), 100, 0, 0, 100, false)
+        tweenBreath(coordinateConversion(small_x, small_y), 100, 0, 0, 100)
       }, 100 * distance[local_x][local_y])
     }
   }
