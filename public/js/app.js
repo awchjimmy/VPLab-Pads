@@ -8,7 +8,7 @@ import { recordKeyboard, keyloggerArray, replayKeyboard } from './utils/keyboard
 // animation effects
 import { tweenDrumKick } from './tweenEffects/tweenDrumKick.js'
 import { tweenBreath } from './tweenEffects/tweenBreath.js'
-import { tweenGlobalHueChange } from './tweenEffects/tweenGlobalHueChange.js'
+import { registerTweenGlobalHueChange, tweenGlobalHueChange } from './tweenEffects/tweenGlobalHueChange.js'
 import { tweenRunningLights } from './tweenEffects/tweenRunningLights.js'
 
 // keyboard record playback
@@ -221,6 +221,9 @@ let beat = (x, y) => {
 window.addEventListener('keydown', (e) => {
   // alert(e.keyCode)
   switch (e.keyCode) {
+    case 48:
+      tweenGlobalHueChange()
+      break
     case 49: // 1
       audioDrumKick()
       tweenDrumKick()
