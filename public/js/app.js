@@ -7,6 +7,7 @@ import { recordKeyboard, keyloggerArray, replayKeyboard } from './utils/keyboard
 
 // animation effects
 import { tweenDrumKick } from './tweenEffects/tweenDrumKick.js'
+import { tweenDrumSnr } from './tweenEffects/tweenDrumSnr.js'
 import { tweenBreath } from './tweenEffects/tweenBreath.js'
 import { registerTweenGlobalHueChange, tweenGlobalHueChange } from './tweenEffects/tweenGlobalHueChange.js'
 import { tweenRunningLights } from './tweenEffects/tweenRunningLights.js'
@@ -23,16 +24,7 @@ initPixels()
 tweenDrumKick()
 // tweenGlobalHueChange()
 
-let tweenDrumSnr = () => {
-  // let ids = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 25, 26, 38, 39, 51, 52, 64, 65, 77, 78, 90, 91, 92, 93, 94, 95, 96, 97, 97, 98, 99, 100, 101, 102, 103]
-  let ids = _.concat(_.range(0, 26), _.range(78, 104), [26, 27, 50, 51, 52, 53, 76, 77, 78, 79, 37, 38, 39, 40, 63, 64, 65, 66])
-  console.debug(ids)
 
-  ids.forEach(id => {
-    pixels[id].l = 50
-    createjs.Tween.get(pixels[id]).to({ l: LIGHTNESS_MIN }, 700)
-  })
-}
 
 let tweenHeart = () => {
   let ids = [45, 31, 30, 42, 55, 69, 83, 84, 85, 73, 61, 48, 34, 33, 43, 44, 46, 47, 56, 57, 58, 59, 60, 70, 71, 72]
@@ -230,6 +222,7 @@ window.addEventListener('keydown', (e) => {
       break
     case 50: // 2
       audioDrumSnr()
+      tweenDrumSnr()
       break
     case 51: // 3
       audioDrumHiHat()

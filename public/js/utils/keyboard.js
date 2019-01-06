@@ -1,6 +1,7 @@
 import { _, bgm } from '../constants.js'
 import { audioDrumKick, audioDrumSnr, audioDrumHiHat, audioDrumClap, startPlayback } from '../utils/audio.js'
 import { tweenDrumKick } from '../tweenEffects/tweenDrumKick.js'
+import { tweenDrumSnr } from '../tweenEffects/tweenDrumSnr.js';
 
 
 export let keyloggerArray = []
@@ -21,6 +22,7 @@ export const replayKeyboard = (keySequence) => {
                     break
                 case 50: // 2
                     audioDrumSnr()
+                    tweenDrumSnr()
                     break
                 case 51: // 3
                     audioDrumHiHat()
