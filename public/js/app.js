@@ -8,6 +8,7 @@ import { recordKeyboard, keyloggerArray, replayKeyboard } from './utils/keyboard
 // animation effects
 import { tweenDrumKick } from './tweenEffects/tweenDrumKick.js'
 import { tweenDrumSnr } from './tweenEffects/tweenDrumSnr.js'
+import { tweenDrumClap } from './tweenEffects/tweenDrumClap.js'
 import { tweenBreath } from './tweenEffects/tweenBreath.js'
 import { registerTweenGlobalHueChange, tweenGlobalHueChange } from './tweenEffects/tweenGlobalHueChange.js'
 import { tweenRunningLights } from './tweenEffects/tweenRunningLights.js'
@@ -214,7 +215,7 @@ window.addEventListener('keydown', (e) => {
   // alert(e.keyCode)
   switch (e.keyCode) {
     case 48:
-      tweenGlobalHueChange()
+      // tweenGlobalHueChange()
       break
     case 49: // 1
       audioDrumKick()
@@ -229,6 +230,11 @@ window.addEventListener('keydown', (e) => {
       break
     case 52: // 4
       audioDrumClap()
+      tweenDrumClap()
+      // tweenRunningLights(_.range(12, -1))
+      // tweenRunningLights(_.range(13, 26))
+      // tweenRunningLights(_.range(39, 25))
+      // tweenRunningLights(_.range(40, 52))
       break
     case 65: // A
       // trigger_A()

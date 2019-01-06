@@ -7,6 +7,7 @@ export const tweenDrumKick = () => {
 
     for (let id = 0; id < TOTAL_LEDS; id++) {
         pixels[id].h = rnd_h
+        pixels[id].s = 100
         pixels[id].l = 50
         createjs.Tween.get(pixels[id]).to({ l: LIGHTNESS_MIN }, 700)
     }
