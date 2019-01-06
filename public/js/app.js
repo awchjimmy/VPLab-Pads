@@ -21,7 +21,7 @@ initPixels()
 
 // animation part
 tweenDrumKick()
-tweenGlobalHueChange()
+// tweenGlobalHueChange()
 
 let tweenDrumSnr = () => {
   // let ids = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 25, 26, 38, 39, 51, 52, 64, 65, 77, 78, 90, 91, 92, 93, 94, 95, 96, 97, 97, 98, 99, 100, 101, 102, 103]
