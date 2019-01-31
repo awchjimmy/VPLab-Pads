@@ -14,6 +14,7 @@ import { registerTweenGlobalHueChange, tweenGlobalHueChange } from './tweenEffec
 import { tweenRunningLights } from './tweenEffects/tweenRunningLights.js'
 
 // keyboard record playback
+import { file0001 } from './file0001.js'
 import { file0002 } from './file0002.js'
 
 // socket.io
@@ -269,7 +270,8 @@ window.addEventListener('keydown', (e) => {
       playbackKeyboardTiming()
       break;
     case 81: // Q bgm start
-      startBackgroundMusic()
+      startPlayback(bgm, 'assets/0001.mp3')
+      replayKeyboard(file0001)
       break
     case 86: // V
       startPlayback(bgm, 'assets/0004.mp3')
